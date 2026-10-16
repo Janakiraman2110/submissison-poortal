@@ -78,8 +78,44 @@ def generate_submission_file(req_id, sub_type, bureau, sub_date, included_accoun
 
 
 @app.route('/')
-def index():
-    return redirect(url_for('request_page'))
+@app.route('/dashboard')
+def dashboard_page():
+    requests_data = load_requests()
+    accounts = load_accounts()
+
+    recent = sorted(requests_data, key=lambda r: r.get('created_at', ''), reverse=True)
+
+    bureaus = []
+    for name in ['CIBIL', 'Highmark', 'Experian', 'Equifax']:
+        reqs = [r for r in recent if r.get('bureau') == name]
+        bureaus.append({
+            "name": name,
+            "count": len(reqs),
+            "records": sum(r.get('included_count', 0) for r in reqs),
+            "last": reqs[0].get('submission_date') if reqs else None,
+        })
+    max_records = max([b["records"] for b in bureaus] + [1])
+
+    flagged = [a for a in accounts if a.get('exception_reason')]
+    top_exceptions = sorted(flagged, key=lambda a: a.get('dpd', 0), reverse=True)[:5]
+
+    stats = {
+        "total_requests": len(requests_data),
+        "records_sent": sum(r.get('included_count', 0) for r in requests_data),
+        "excluded": sum(r.get('excluded_count', 0) for r in requests_data),
+        "flagged": len(flagged),
+        "accounts": len(accounts),
+    }
+
+    return render_template(
+        'dashboard.html',
+        active_page='dashboard',
+        stats=stats,
+        recent=recent[:6],
+        bureaus=bureaus,
+        max_records=max_records,
+        top_exceptions=top_exceptions,
+    )
 
 
 @app.route('/request')

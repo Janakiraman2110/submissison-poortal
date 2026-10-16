@@ -1,85 +1,58 @@
 {% extends "base.html" %}
 
-{% block title %}Exceptions Management - BureauPulse{% endblock %}
+{% block title %}Exceptions - BureauPulse{% endblock %}
+{% block breadcrumb %}Exceptions{% endblock %}
 
 {% block content %}
 <div class="page-header">
   <div>
-    <h2 class="page-title">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" stroke-width="2.2">
-        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-        <line x1="12" y1="9" x2="12" y2="13"></line>
-        <line x1="12" y1="17" x2="12.01" y2="17"></line>
-      </svg>
-      Exceptions Management Page
-    </h2>
+    <h2 class="page-title">Exceptions Management</h2>
     <p class="page-subtitle">
-      Inspect accounts flagged with legal stays, dispute notices, NCLT proceedings, and data discrepancies. Selected accounts will be excluded from the active bureau reporting request.
+      Review accounts flagged with legal stays, disputes, NCLT proceedings or data discrepancies. Selected accounts are excluded from the next bureau reporting request.
     </p>
   </div>
-  <div style="display: flex; gap: 0.75rem;">
+  <div class="page-actions">
     <button type="button" class="btn btn-secondary btn-sm" onclick="exceptionsMaster.exportExceptionsCSV()">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-        <polyline points="7 10 12 15 17 10"></polyline>
-        <line x1="12" y1="15" x2="12" y2="3"></line>
-      </svg>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
       Export CSV
     </button>
-    <button type="button" class="btn btn-primary btn-sm btn-glow" onclick="exceptionsMaster.launchSubmissionWithSelected()">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <line x1="12" y1="5" x2="12" y2="19"></line>
-        <line x1="5" y1="12" x2="19" y2="12"></line>
-      </svg>
-      Launch Request With Selected Exclusions (<span id="selectedExclusionsCountBadge">0</span>)
+    <button type="button" class="btn btn-primary btn-sm" onclick="exceptionsMaster.launchSubmissionWithSelected()">
+      Create Request with Exclusions (<span id="selectedExclusionsCountBadge">0</span>)
     </button>
   </div>
 </div>
 
-<!-- Stats Counter -->
-<div class="exceptions-stats-banner">
-  <div class="stat-item">
-    <div>
-      <div class="stat-val blue" id="totalMasterAccounts">16</div>
-      <div class="stat-lbl">Total Monitored Accounts</div>
-    </div>
+<div class="kpi-grid">
+  <div class="kpi-card blue">
+    <span class="stat-lbl">Monitored Accounts</span>
+    <div class="stat-val" id="totalMasterAccounts">16</div>
   </div>
-  <div class="stat-item">
-    <div>
-      <div class="stat-val rose" id="totalExcludedMarked">0</div>
-      <div class="stat-lbl">Marked for Exclusion</div>
-    </div>
+  <div class="kpi-card rose">
+    <span class="stat-lbl">Marked for Exclusion</span>
+    <div class="stat-val" id="totalExcludedMarked">0</div>
   </div>
-  <div class="stat-item">
-    <div>
-      <div class="stat-val emerald" id="totalCleanMarked">16</div>
-      <div class="stat-lbl">Clean for Submission</div>
-    </div>
+  <div class="kpi-card emerald">
+    <span class="stat-lbl">Clean for Submission</span>
+    <div class="stat-val" id="totalCleanMarked">16</div>
   </div>
 </div>
 
 <div class="glass-card">
-  <!-- Filtering Controls -->
   <div class="filter-bar">
     <div class="search-wrapper">
-      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="11" cy="11" r="8"></circle>
-        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-      </svg>
-      <input type="text" id="masterSearchInput" class="form-control" placeholder="Search Account Number, Customer Name, Facility, Reason..." oninput="exceptionsMaster.filter()">
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input type="text" id="masterSearchInput" class="form-control" placeholder="Search account, customer, facility or reason" oninput="exceptionsMaster.filter()">
     </div>
-
     <div class="pill-group">
-      <button class="action-pill active" data-filter-type="ALL" onclick="exceptionsMaster.setTypeFilter('ALL', this)">All Types</button>
-      <button class="action-pill" data-filter-type="Commercial" onclick="exceptionsMaster.setTypeFilter('Commercial', this)">Commercial Only</button>
-      <button class="action-pill" data-filter-type="Consumer" onclick="exceptionsMaster.setTypeFilter('Consumer', this)">Consumer Only</button>
-      
+      <button class="action-pill active" data-filter-type="ALL" onclick="exceptionsMaster.setTypeFilter('ALL', this)">All</button>
+      <button class="action-pill" data-filter-type="Commercial" onclick="exceptionsMaster.setTypeFilter('Commercial', this)">Commercial</button>
+      <button class="action-pill" data-filter-type="Consumer" onclick="exceptionsMaster.setTypeFilter('Consumer', this)">Consumer</button>
+      <span class="pill-divider"></span>
       <button class="action-pill" onclick="exceptionsMaster.toggleSelectAll(true)">Select All</button>
-      <button class="action-pill" onclick="exceptionsMaster.toggleSelectAll(false)">Clear All</button>
+      <button class="action-pill" onclick="exceptionsMaster.toggleSelectAll(false)">Clear</button>
     </div>
   </div>
 
-  <!-- Table -->
   <div class="table-responsive">
     <table class="modern-table">
       <thead>
@@ -91,13 +64,11 @@
           <th>Entity / Facility</th>
           <th>Balance (INR)</th>
           <th>DPD</th>
-          <th>Exception / Audit Reason</th>
+          <th>Exception Reason</th>
           <th>Action</th>
         </tr>
       </thead>
-      <tbody id="masterExceptionsTableBody">
-        <!-- Dynamically rendered via JS -->
-      </tbody>
+      <tbody id="masterExceptionsTableBody"></tbody>
     </table>
   </div>
 </div>

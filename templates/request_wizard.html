@@ -1,348 +1,262 @@
 {% extends "base.html" %}
 
-{% block title %}New Bureau Submission Request - BureauPulse{% endblock %}
+{% block title %}New Submission Request - BureauPulse{% endblock %}
+{% block breadcrumb %}New Request{% endblock %}
 
 {% block content %}
 <div class="page-header">
   <div>
-    <h2 class="page-title">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2.2">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-        <polyline points="14 2 14 8 20 8"></polyline>
-        <line x1="12" y1="18" x2="12" y2="12"></line>
-        <line x1="9" y1="15" x2="15" y2="15"></line>
-      </svg>
-      Initiate Bureau Submission Request
-    </h2>
+    <h2 class="page-title">New Bureau Submission Request</h2>
     <p class="page-subtitle">
-      Configure your submission parameters, exclude exception accounts, and trigger the Azure Function App to generate transmission files to Azure Blob Storage.
+      Configure submission parameters, exclude exception accounts, and trigger the Azure Function App to generate the transmission file in Azure Blob Storage.
     </p>
   </div>
+  <div class="page-actions">
+    <a href="{{ url_for('tracker_page') }}" class="btn btn-secondary btn-sm">View Tracker</a>
+  </div>
+</div>
+
+<div class="wizard-layout">
+
+  <!-- Vertical step list -->
+  <aside class="wizard-stepper">
+    <div class="wizard-stepper-title">Request Steps</div>
+    <div class="wizard-step-line"><div class="wizard-step-progress" id="stepProgressLine"></div></div>
+
+    <div class="step-node active" id="stepNode1" onclick="wizard.goToStep(1)">
+      <div class="step-circle">1</div>
+      <span class="step-label">Request Parameters<span class="step-hint">Type, bureau and date</span></span>
+    </div>
+    <div class="step-node" id="stepNode2" onclick="wizard.goToStep(2)">
+      <div class="step-circle">2</div>
+      <span class="step-label">Exceptions Screening<span class="step-hint">Exclude flagged accounts</span></span>
+    </div>
+    <div class="step-node" id="stepNode3" onclick="wizard.goToStep(3)">
+      <div class="step-circle">3</div>
+      <span class="step-label">Review &amp; Submit<span class="step-hint">Confirm and trigger</span></span>
+    </div>
+  </aside>
+
   <div>
-    <a href="{{ url_for('tracker_page') }}" class="btn btn-secondary btn-sm">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-        <line x1="3" y1="9" x2="21" y2="9"></line>
-      </svg>
-      View Tracker
-    </a>
-  </div>
-</div>
-
-<!-- Wizard Step Indicators -->
-<div class="wizard-stepper">
-  <div class="wizard-step-line">
-    <div class="wizard-step-progress" id="stepProgressLine"></div>
-  </div>
-
-  <div class="step-node active" id="stepNode1" onclick="wizard.goToStep(1)">
-    <div class="step-circle">1</div>
-    <span class="step-label">Request Parameters</span>
-  </div>
-
-  <div class="step-node" id="stepNode2" onclick="wizard.goToStep(2)">
-    <div class="step-circle">2</div>
-    <span class="step-label">Exceptions Screening</span>
-  </div>
-
-  <div class="step-node" id="stepNode3" onclick="wizard.goToStep(3)">
-    <div class="step-circle">3</div>
-    <span class="step-label">Review & Trigger</span>
-  </div>
-</div>
-
-<!-- =========================================================================
-     STEP 1: REQUEST PAGE (PARAMETERS)
-     ========================================================================= -->
-<div id="stepContent1" class="wizard-step-content">
-  <div class="glass-card">
-    <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; color: #fff;">
-      Step 1: Request Parameters
-    </h3>
-    <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.75rem;">
-      Select the submission portfolio classification, target credit bureau, and official reporting cycle date.
-    </p>
-
-    <!-- Submission Type Selector -->
-    <div class="form-group">
-      <label class="form-label">
-        Submission Type <span class="sub">(Select portfolio classification)</span>
-      </label>
-      <div class="type-grid">
-        <div class="type-card selected" data-type="Commercial" onclick="wizard.selectType('Commercial')">
-          <div class="type-icon">🏢</div>
-          <div class="type-info">
-            <h3>Commercial</h3>
-            <p>Non-individual entities, corporates, LLPs, partnerships, working capital loans & credit facilities.</p>
+    <!-- ===================== STEP 1 ===================== -->
+    <div id="stepContent1" class="wizard-step-content">
+      <div class="glass-card">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">Request Parameters</h3>
+            <p class="card-subtitle">Select the portfolio classification, target credit bureau and reporting cycle date.</p>
           </div>
         </div>
 
-        <div class="type-card" data-type="Consumer" onclick="wizard.selectType('Consumer')">
-          <div class="type-icon">👤</div>
-          <div class="type-info">
-            <h3>Consumer</h3>
-            <p>Individual retail borrowers, home loans, auto loans, personal credit lines & retail credit cards.</p>
+        <div class="form-group">
+          <label class="form-label">Submission Type</label>
+          <div class="type-grid">
+            <div class="type-card selected" data-type="Commercial" onclick="wizard.selectType('Commercial')">
+              <div class="type-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="4" y="2" width="16" height="20" rx="1"></rect>
+                  <line x1="9" y1="6" x2="9" y2="6.01"></line><line x1="15" y1="6" x2="15" y2="6.01"></line>
+                  <line x1="9" y1="10" x2="9" y2="10.01"></line><line x1="15" y1="10" x2="15" y2="10.01"></line>
+                  <line x1="9" y1="14" x2="9" y2="14.01"></line><line x1="15" y1="14" x2="15" y2="14.01"></line>
+                  <path d="M10 22v-4h4v4"></path>
+                </svg>
+              </div>
+              <div class="type-info">
+                <h3>Commercial</h3>
+                <p>Non-individual entities: corporates, LLPs, partnerships, working capital and credit facilities.</p>
+              </div>
+            </div>
+
+            <div class="type-card" data-type="Consumer" onclick="wizard.selectType('Consumer')">
+              <div class="type-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </div>
+              <div class="type-info">
+                <h3>Consumer</h3>
+                <p>Individual retail borrowers: home, auto and personal loans, retail credit lines and cards.</p>
+              </div>
+            </div>
+          </div>
+          <input type="hidden" id="submissionType" value="Commercial">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Credit Bureau</label>
+          <div class="bureau-grid">
+            <div class="bureau-pill selected" data-bureau="CIBIL" onclick="wizard.selectBureau('CIBIL')">
+              <span class="bureau-logo">CIBIL</span>
+              <span class="sub">TransUnion standard</span>
+            </div>
+            <div class="bureau-pill" data-bureau="Highmark" onclick="wizard.selectBureau('Highmark')">
+              <span class="bureau-logo">Highmark</span>
+              <span class="sub">CRIF format</span>
+            </div>
+            <div class="bureau-pill" data-bureau="Experian" onclick="wizard.selectBureau('Experian')">
+              <span class="bureau-logo">Experian</span>
+              <span class="sub">Commercial &amp; retail</span>
+            </div>
+            <div class="bureau-pill" data-bureau="Equifax" onclick="wizard.selectBureau('Equifax')">
+              <span class="bureau-logo">Equifax</span>
+              <span class="sub">MFI &amp; commercial</span>
+            </div>
+          </div>
+          <input type="hidden" id="bureauName" value="CIBIL">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="submissionDate">Submission Date <span class="sub">Reporting snapshot date</span></label>
+            <input type="date" id="submissionDate" class="form-control" value="2026-10-16">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="requestNotes">Batch Description <span class="sub">Optional</span></label>
+            <input type="text" id="requestNotes" class="form-control" placeholder="e.g. October 2026 monthly transmittal" value="Scheduled Monthly Bureau Reporting Cycle">
           </div>
         </div>
-      </div>
-      <input type="hidden" id="submissionType" value="Commercial">
-    </div>
 
-    <!-- Bureau Name Selector -->
-    <div class="form-group">
-      <label class="form-label">
-        Credit Bureau Name <span class="sub">(Designate the reporting bureau format)</span>
-      </label>
-      <div class="bureau-grid">
-        <div class="bureau-pill selected" data-bureau="CIBIL" onclick="wizard.selectBureau('CIBIL')">
-          <span class="bureau-logo">CIBIL</span>
-          <span class="sub">TransUnion Standard</span>
+        <div class="wizard-footer">
+          <span style="font-size: 0.82rem; color: var(--text-dim);">Step 1 of 3</span>
+          <button type="button" class="btn btn-primary" onclick="wizard.goToStep(2)">
+            Continue
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
         </div>
-        <div class="bureau-pill" data-bureau="Highmark" onclick="wizard.selectBureau('Highmark')">
-          <span class="bureau-logo">Highmark</span>
-          <span class="sub">CRIF Format</span>
-        </div>
-        <div class="bureau-pill" data-bureau="Experian" onclick="wizard.selectBureau('Experian')">
-          <span class="bureau-logo">Experian</span>
-          <span class="sub">Commercial & Retail</span>
-        </div>
-        <div class="bureau-pill" data-bureau="Equifax" onclick="wizard.selectBureau('Equifax')">
-          <span class="bureau-logo">Equifax</span>
-          <span class="sub">MFI & Commercial</span>
-        </div>
-      </div>
-      <input type="hidden" id="bureauName" value="CIBIL">
-    </div>
-
-    <!-- Submission Date & Cycle Notes -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
-      <div class="form-group">
-        <label class="form-label" for="submissionDate">
-          Submission Date <span class="sub">(Reporting snapshot date)</span>
-        </label>
-        <input type="date" id="submissionDate" class="form-control" value="2026-10-16">
-      </div>
-
-      <div class="form-group">
-        <label class="form-label" for="requestNotes">
-          Submission Batch Description / Notes <span class="sub">(Optional)</span>
-        </label>
-        <input type="text" id="requestNotes" class="form-control" placeholder="e.g. October 2026 Regular Monthly Transmittal" value="Scheduled Monthly Bureau Reporting Cycle">
       </div>
     </div>
 
-    <div class="wizard-footer">
-      <span style="font-size: 0.85rem; color: var(--text-dim);">
-        Point A: Request Parameters configured
-      </span>
-      <button type="button" class="btn btn-primary" onclick="wizard.goToStep(2)">
-        Continue to Exceptions Page
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="5" y1="12" x2="19" y2="12"></line>
-          <polyline points="12 5 19 12 12 19"></polyline>
-        </svg>
-      </button>
+    <!-- ===================== STEP 2 ===================== -->
+    <div id="stepContent2" class="wizard-step-content" style="display: none;">
+      <div class="glass-card">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">Exceptions Screening</h3>
+            <p class="card-subtitle">Select accounts to exclude from this request. Excluded accounts are omitted from the transmission file.</p>
+          </div>
+          <div class="card-tags">
+            <span class="badge badge-cibil" id="currentBureauTag">CIBIL</span>
+            <span class="badge" id="currentTypeTag">Commercial</span>
+          </div>
+        </div>
+
+        <div class="kpi-grid compact">
+          <div class="kpi-card blue">
+            <span class="stat-lbl">Eligible Accounts</span>
+            <div class="stat-val" id="statTotalAccounts">0</div>
+          </div>
+          <div class="kpi-card emerald">
+            <span class="stat-lbl">Included in Submission</span>
+            <div class="stat-val" id="statIncludedAccounts">0</div>
+          </div>
+          <div class="kpi-card rose">
+            <span class="stat-lbl">Excluded</span>
+            <div class="stat-val" id="statExcludedAccounts">0</div>
+          </div>
+        </div>
+
+        <div class="filter-bar">
+          <div class="search-wrapper">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="exceptionsSearchInput" class="form-control" placeholder="Search account number, customer or tax ID" oninput="wizard.filterAccounts()">
+          </div>
+          <div class="pill-group">
+            <button type="button" class="action-pill" onclick="wizard.bulkExcludeOverdue()">Exclude DPD &gt; 30</button>
+            <span class="pill-divider"></span>
+            <button type="button" class="action-pill" onclick="wizard.selectAllExceptions(true)">Exclude All</button>
+            <button type="button" class="action-pill" onclick="wizard.selectAllExceptions(false)">Include All</button>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="modern-table">
+            <thead>
+              <tr>
+                <th style="width: 50px; text-align: center;">Exclude</th>
+                <th>Account Number</th>
+                <th>Customer Name</th>
+                <th>Identifier / Facility</th>
+                <th>Balance (INR)</th>
+                <th>DPD / Status</th>
+                <th>Exclusion Reason</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="exceptionsTableBody"></tbody>
+          </table>
+        </div>
+
+        <div class="wizard-footer">
+          <button type="button" class="btn btn-secondary" onclick="wizard.goToStep(1)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            Back
+          </button>
+          <button type="button" class="btn btn-primary" onclick="wizard.goToStep(3)">
+            Review Request
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== STEP 3 ===================== -->
+    <div id="stepContent3" class="wizard-step-content" style="display: none;">
+      <div class="glass-card">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">Review &amp; Submit</h3>
+            <p class="card-subtitle">Confirm the details below. Submitting registers the request and triggers the Azure Function App.</p>
+          </div>
+        </div>
+
+        <div class="review-grid">
+          <div class="review-item">
+            <span class="stat-lbl">Submission Type</span>
+            <h4 id="reviewType">Commercial</h4>
+          </div>
+          <div class="review-item">
+            <span class="stat-lbl">Credit Bureau</span>
+            <h4 id="reviewBureau">CIBIL</h4>
+          </div>
+          <div class="review-item">
+            <span class="stat-lbl">Submission Date</span>
+            <h4 id="reviewDate">2026-10-16</h4>
+          </div>
+          <div class="review-item">
+            <span class="stat-lbl">Excluded Accounts</span>
+            <h4 id="reviewExcludedCount" style="color: var(--danger);">0 Accounts</h4>
+          </div>
+        </div>
+
+        <div class="section-box">
+          <div class="section-box-title">
+            <span>Accounts excluded from this request</span>
+            <span id="reviewIncludedBadge" class="badge badge-included">0 Active in File</span>
+          </div>
+          <div id="reviewExcludedList" style="display: flex; flex-wrap: wrap; gap: 0.5rem; max-height: 140px; overflow-y: auto;"></div>
+        </div>
+
+        <div class="notice">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          <span>Submitting stores the request in the database and calls the Azure Function App, which generates the bureau file and writes it to Blob Storage.</span>
+        </div>
+
+        <div class="wizard-footer">
+          <button type="button" class="btn btn-secondary" onclick="wizard.goToStep(2)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            Modify Exceptions
+          </button>
+          <button type="button" class="btn btn-primary" id="btnSubmitRequest" onclick="wizard.submitRequest()">
+            Submit Request
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- =========================================================================
-     STEP 2: EXCEPTIONS PAGE (ACCOUNT EXCLUSION SCREENING)
-     ========================================================================= -->
-<div id="stepContent2" class="wizard-step-content" style="display: none;">
-  <div class="glass-card">
-    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
-      <div>
-        <h3 style="font-size: 1.2rem; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 0.5rem;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" stroke-width="2">
-            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-            <line x1="12" y1="9" x2="12" y2="13"></line>
-            <line x1="12" y1="17" x2="12.01" y2="17"></line>
-          </svg>
-          Step 2: Exceptions Page (Exclude Accounts from Active Request)
-        </h3>
-        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.25rem;">
-          Select account numbers and customer names to be excluded from this active request. Selected items will be omitted from the Azure transmission file.
-        </p>
-      </div>
-      <div style="text-align: right;">
-        <span class="badge badge-cibil" id="currentBureauTag">CIBIL</span>
-        <span class="badge" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa;" id="currentTypeTag">Commercial</span>
-      </div>
-    </div>
-
-    <!-- Exceptions Stats Banner -->
-    <div class="exceptions-stats-banner">
-      <div class="stat-item">
-        <div>
-          <div class="stat-val blue" id="statTotalAccounts">0</div>
-          <div class="stat-lbl">Eligible Accounts</div>
-        </div>
-      </div>
-      <div class="stat-item">
-        <div>
-          <div class="stat-val emerald" id="statIncludedAccounts">0</div>
-          <div class="stat-lbl">Active In Submission</div>
-        </div>
-      </div>
-      <div class="stat-item">
-        <div>
-          <div class="stat-val rose" id="statExcludedAccounts">0</div>
-          <div class="stat-lbl">Excluded Exceptions</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Filter & Search Toolbar -->
-    <div class="filter-bar">
-      <div class="search-wrapper">
-        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-        <input type="text" id="exceptionsSearchInput" class="form-control" placeholder="Search Account Number, Customer Name, or Tax ID..." oninput="wizard.filterAccounts()">
-      </div>
-
-      <div class="pill-group">
-        <button type="button" class="action-pill" onclick="wizard.bulkExcludeOverdue()">
-          ⚡ Exclude High DPD (>30 Days)
-        </button>
-        <button type="button" class="action-pill" onclick="wizard.selectAllExceptions(true)">
-          Select All to Exclude
-        </button>
-        <button type="button" class="action-pill" onclick="wizard.selectAllExceptions(false)">
-          Clear Exclusions (Include All)
-        </button>
-      </div>
-    </div>
-
-    <!-- Accounts Exceptions Table -->
-    <div class="table-responsive">
-      <table class="modern-table">
-        <thead>
-          <tr>
-            <th style="width: 50px; text-align: center;">Exclude</th>
-            <th>Account Number</th>
-            <th>Customer Name</th>
-            <th>Identifier / Facility</th>
-            <th>Balance (INR)</th>
-            <th>DPD / Status</th>
-            <th>Exclusion / Risk Reason</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="exceptionsTableBody">
-          <!-- Dynamically populated via JS -->
-        </tbody>
-      </table>
-    </div>
-
-    <div class="wizard-footer">
-      <button type="button" class="btn btn-secondary" onclick="wizard.goToStep(1)">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="19" y1="12" x2="5" y2="12"></line>
-          <polyline points="12 19 5 12 12 5"></polyline>
-        </svg>
-        Back to Parameters
-      </button>
-
-      <button type="button" class="btn btn-primary" onclick="wizard.goToStep(3)">
-        Review & Finalize Request
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="5" y1="12" x2="19" y2="12"></line>
-          <polyline points="12 5 19 12 12 19"></polyline>
-        </svg>
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- =========================================================================
-     STEP 3: REVIEW & TRIGGER AZURE FUNCTION APP
-     ========================================================================= -->
-<div id="stepContent3" class="wizard-step-content" style="display: none;">
-  <div class="glass-card" style="max-width: 900px; margin: 0 auto;">
-    <div style="text-align: center; margin-bottom: 2rem;">
-      <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(59, 130, 246, 0.15); border: 2px solid #3b82f6; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 0.85rem;">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2.2">
-          <polyline points="20 6 9 17 4 12"></polyline>
-        </svg>
-      </div>
-      <h3 style="font-size: 1.4rem; font-weight: 700; color: #fff;">
-        Review Submission Request & Exceptions
-      </h3>
-      <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 600px; margin: 0.35rem auto 0;">
-        Both Request Parameters and Excluded Exceptions have been consolidated. Confirm to register the request in the DB and trigger the Azure Function App.
-      </p>
-    </div>
-
-    <!-- Review Grid -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; margin-bottom: 1.75rem;">
-      <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border-subtle); padding: 1.2rem; border-radius: var(--radius-md);">
-        <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Submission Type</span>
-        <h4 id="reviewType" style="color: #60a5fa; font-size: 1.15rem; margin-top: 0.25rem;">Commercial</h4>
-      </div>
-
-      <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border-subtle); padding: 1.2rem; border-radius: var(--radius-md);">
-        <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Target Credit Bureau</span>
-        <h4 id="reviewBureau" style="color: #fbbf24; font-size: 1.15rem; margin-top: 0.25rem;">CIBIL</h4>
-      </div>
-
-      <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border-subtle); padding: 1.2rem; border-radius: var(--radius-md);">
-        <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Submission Date</span>
-        <h4 id="reviewDate" style="color: #e2e8f0; font-size: 1.15rem; margin-top: 0.25rem;">2026-10-16</h4>
-      </div>
-
-      <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border-subtle); padding: 1.2rem; border-radius: var(--radius-md);">
-        <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Excluded Exceptions</span>
-        <h4 id="reviewExcludedCount" style="color: #f43f5e; font-size: 1.15rem; margin-top: 0.25rem;">0 Accounts</h4>
-      </div>
-    </div>
-
-    <!-- Excluded Accounts Breakdown Box -->
-    <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 2rem;">
-      <h4 style="font-size: 0.95rem; font-weight: 600; color: #cbd5e1; margin-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between;">
-        <span>Accounts to be Excluded from this active request:</span>
-        <span id="reviewIncludedBadge" class="badge badge-included">0 Active in File</span>
-      </h4>
-      <div id="reviewExcludedList" style="display: flex; flex-wrap: wrap; gap: 0.5rem; max-height: 140px; overflow-y: auto;">
-        <!-- Populated via JS -->
-      </div>
-    </div>
-
-    <div style="background: rgba(59, 130, 246, 0.08); border: 1px dashed rgba(59, 130, 246, 0.3); border-radius: var(--radius-md); padding: 1rem 1.25rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.85rem;">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2">
-        <circle cx="12" cy="12" r="10"></circle>
-        <line x1="12" y1="16" x2="12" y2="12"></line>
-        <line x1="12" y1="8" x2="12.01" y2="8"></line>
-      </svg>
-      <span style="font-size: 0.85rem; color: #93c5fd;">
-        Clicking the button below stores the unified request in the database and immediately calls the dummy Azure Function App to generate the submission file and write it to Azure Blob Storage.
-      </span>
-    </div>
-
-    <div class="wizard-footer">
-      <button type="button" class="btn btn-secondary" onclick="wizard.goToStep(2)">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="19" y1="12" x2="5" y2="12"></line>
-          <polyline points="12 19 5 12 12 5"></polyline>
-        </svg>
-        Modify Exceptions
-      </button>
-
-      <button type="button" class="btn btn-primary btn-glow" id="btnSubmitRequest" onclick="wizard.submitRequest()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-        </svg>
-        Submit Request & Trigger Azure Function
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- =========================================================================
-     SIMULATED AZURE FUNCTION & BLOB EXECUTION MODAL
-     ========================================================================= -->
+<!-- Execution modal -->
 <div class="modal-backdrop" id="simulationModal">
   <div class="modal-content">
     <div class="modal-header">
@@ -353,70 +267,53 @@
     </div>
 
     <div class="modal-body">
-      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
-        Tracking live execution of Azure Function App transmittal pipeline:
-      </p>
+      <p style="font-size: 0.84rem; color: var(--text-muted); margin-bottom: 1rem;">Pipeline execution progress</p>
 
       <div class="stepper-logs" id="stepperLogs">
         <div class="log-entry" id="logStep1">
           <div class="log-icon"><span class="spinner"></span></div>
-          <span>[1/5] Storing Request in DB with Excluded Account IDs...</span>
+          <span>[1/5] Storing request in DB with excluded account IDs</span>
         </div>
         <div class="log-entry" id="logStep2">
-          <div class="log-icon">•</div>
+          <div class="log-icon"><span class="log-dot"></span></div>
           <span>[2/5] Invoking Azure Function App: <code id="logFuncName">func-bureau-processor</code></span>
         </div>
         <div class="log-entry" id="logStep3">
-          <div class="log-icon">•</div>
-          <span>[3/5] Querying active portfolio & filtering out excluded exceptions...</span>
+          <div class="log-icon"><span class="log-dot"></span></div>
+          <span>[3/5] Querying portfolio and filtering excluded accounts</span>
         </div>
         <div class="log-entry" id="logStep4">
-          <div class="log-icon">•</div>
-          <span>[4/5] Formatting transmission file segments (HDR, Detail, TRL)...</span>
+          <div class="log-icon"><span class="log-dot"></span></div>
+          <span>[4/5] Formatting file segments (HDR, Detail, TRL)</span>
         </div>
         <div class="log-entry" id="logStep5">
-          <div class="log-icon">•</div>
-          <span>[5/5] Uploading file to Azure Blob Storage & generating SAS URI...</span>
+          <div class="log-icon"><span class="log-dot"></span></div>
+          <span>[5/5] Uploading to Azure Blob Storage and generating SAS URI</span>
         </div>
       </div>
 
-      <!-- Result Card (shown when complete) -->
       <div class="result-card" id="modalResultBox" style="display: none;">
-        <div style="display: flex; align-items: center; gap: 0.5rem; color: #34d399; font-weight: 700; margin-bottom: 0.5rem;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-          </svg>
-          File Successfully Uploaded to Azure Blob Storage!
+        <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--success); font-weight: 700; margin-bottom: 0.4rem;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          File uploaded to Azure Blob Storage
         </div>
-        <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.5rem;">
-          The Blob location has been committed back to original Request <strong id="resReqId" style="color: #fff;">REQ-000</strong>.
+        <p style="font-size: 0.82rem; color: var(--text-muted);">
+          Blob location committed to request <strong id="resReqId" style="color: var(--text-main);">REQ-000</strong>.
         </p>
-
         <div class="blob-link-box">
           <div class="blob-url-text" id="resBlobUrl">https://azsubtrackprod.blob.core.windows.net/...</div>
-          <button class="action-pill" onclick="wizard.copyBlobUrl()" title="Copy Azure Blob URL">
-            Copy URL
-          </button>
+          <button class="action-pill" onclick="wizard.copyBlobUrl()" title="Copy Azure Blob URL">Copy URL</button>
         </div>
       </div>
     </div>
 
     <div class="modal-footer" id="modalFooter" style="display: none;">
-      <button type="button" class="btn btn-secondary" onclick="wizard.closeModalAndReset()">
-        Close
+      <button type="button" class="btn btn-secondary" onclick="wizard.closeModalAndReset()">Close</button>
+      <button type="button" class="btn btn-secondary" id="btnDownloadFromModal" onclick="wizard.downloadFileFromModal()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        Download File
       </button>
-      <button type="button" class="btn btn-success" id="btnDownloadFromModal" onclick="wizard.downloadFileFromModal()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-          <polyline points="7 10 12 15 17 10"></polyline>
-          <line x1="12" y1="15" x2="12" y2="3"></line>
-        </svg>
-        Download Submission File
-      </button>
-      <a href="{{ url_for('tracker_page') }}" class="btn btn-primary">
-        Go to Submission Tracker
-      </a>
+      <a href="{{ url_for('tracker_page') }}" class="btn btn-primary">Go to Tracker</a>
     </div>
   </div>
 </div>
@@ -424,7 +321,6 @@
 
 {% block extra_scripts %}
 <script>
-  // Initialize wizard with preselected values
   document.addEventListener('DOMContentLoaded', () => {
     wizard.init();
   });

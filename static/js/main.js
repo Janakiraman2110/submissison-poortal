@@ -7,9 +7,9 @@ function showToast(message, type = 'info') {
   const toast = document.getElementById('toastNotification');
   if (!toast) return;
 
-  const bg = type === 'success' ? '#059669' : (type === 'error' ? '#e11d48' : '#2563eb');
+  const bg = type === 'error' ? 'var(--danger)' : '#18181b';
   toast.innerHTML = `
-    <div style="background: ${bg}; color: white; padding: 0.85rem 1.4rem; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); font-size: 0.875rem; font-weight: 600; display: flex; align-items: center; gap: 0.65rem;">
+    <div style="background: ${bg}; color: white; padding: 0.85rem 1.4rem; border-radius: 6px; box-shadow: 0 10px 25px rgba(15,23,42,0.18); font-size: 0.875rem; font-weight: 600; display: flex; align-items: center; gap: 0.65rem;">
       <span>${message}</span>
     </div>
   `;
@@ -173,8 +173,8 @@ const wizard = {
         : `<span class="badge badge-included">Active In File</span>`;
       
       const dpdBadge = acc.dpd > 0 
-        ? `<span style="color: #fb7185; font-weight: 700;">${acc.dpd} DPD</span> (${acc.status})` 
-        : `<span style="color: #34d399;">0 DPD</span> (${acc.status})`;
+        ? `<span class="text-danger">${acc.dpd}</span> (${acc.status})` 
+        : `<span style="color: var(--text-muted);">0</span> (${acc.status})`;
 
       return `
         <tr class="${rowClass}">
@@ -184,17 +184,17 @@ const wizard = {
               <span class="checkmark"></span>
             </label>
           </td>
-          <td style="font-family: monospace; font-weight: 600; color: #93c5fd;">
+          <td class="mono strong nowrap">
             ${acc.account_number}
           </td>
-          <td style="font-weight: 600; color: #f8fafc;">
+          <td class="strong">
             ${acc.customer_name}
           </td>
           <td>
-            <div style="font-size: 0.8rem; color: #94a3b8;">${acc.gstin}</div>
-            <div style="font-size: 0.75rem; color: #64748b;">${acc.facility}</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">${acc.gstin}</div>
+            <div style="font-size: 0.75rem; color: var(--text-dim);">${acc.facility}</div>
           </td>
-          <td style="font-family: monospace; color: #f1f5f9; font-weight: 500;">
+          <td class="num nowrap">
             ₹ ${acc.current_balance.toLocaleString('en-IN')}
           </td>
           <td>${dpdBadge}</td>
@@ -297,9 +297,9 @@ const wizard = {
       this.allAccounts.forEach(acc => {
         if (this.excludedAccounts.has(acc.account_number)) {
           items.push(`
-            <div style="background: rgba(244, 63, 94, 0.12); border: 1px solid rgba(244, 63, 94, 0.3); border-radius: 6px; padding: 0.35rem 0.65rem; font-size: 0.78rem;">
-              <span style="font-family: monospace; color: #fda4af; font-weight: 600;">${acc.account_number}</span>
-              <span style="color: #cbd5e1; margin-left: 0.35rem;">- ${acc.customer_name}</span>
+            <div style="background: var(--danger-soft); border: 1px solid var(--danger-border); border-radius: 6px; padding: 0.35rem 0.65rem; font-size: 0.78rem;">
+              <span style="font-family: monospace; color: var(--danger); font-weight: 600;">${acc.account_number}</span>
+              <span style="color: var(--text-secondary); margin-left: 0.35rem;">- ${acc.customer_name}</span>
             </div>
           `);
         }
@@ -323,7 +323,7 @@ const wizard = {
     for (let i = 1; i <= 5; i++) {
       const el = document.getElementById(`logStep${i}`);
       el.className = 'log-entry';
-      el.querySelector('.log-icon').innerHTML = '•';
+      el.querySelector('.log-icon').innerHTML = '<span class="log-dot"></span>';
     }
     document.getElementById('modalResultBox').style.display = 'none';
     document.getElementById('modalFooter').style.display = 'none';
@@ -339,7 +339,7 @@ const wizard = {
         
         setTimeout(() => {
           el.className = 'log-entry done';
-          el.querySelector('.log-icon').innerHTML = '✓';
+          el.querySelector('.log-icon').innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>';
           resolve();
         }, delay);
       });
@@ -470,8 +470,8 @@ const exceptionsMaster = {
       const isSelected = this.selectedExclusions.has(acc.account_number);
       const rowClass = isSelected ? 'row-excluded' : '';
       const typeBadge = acc.type === 'Commercial'
-        ? `<span class="badge" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa;">Commercial</span>`
-        : `<span class="badge" style="background: rgba(168, 85, 247, 0.15); color: #c084fc;">Consumer</span>`;
+        ? `<span class="badge">Commercial</span>`
+        : `<span class="badge">Consumer</span>`;
 
       return `
         <tr class="${rowClass}">
@@ -481,22 +481,22 @@ const exceptionsMaster = {
               <span class="checkmark"></span>
             </label>
           </td>
-          <td style="font-family: monospace; font-weight: 600; color: #93c5fd;">
+          <td class="mono strong nowrap">
             ${acc.account_number}
           </td>
-          <td style="font-weight: 600; color: #f8fafc;">
+          <td class="strong">
             ${acc.customer_name}
           </td>
           <td>${typeBadge}</td>
           <td>
-            <div style="font-size: 0.8rem; color: #94a3b8;">${acc.gstin}</div>
-            <div style="font-size: 0.75rem; color: #64748b;">${acc.facility}</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">${acc.gstin}</div>
+            <div style="font-size: 0.75rem; color: var(--text-dim);">${acc.facility}</div>
           </td>
-          <td style="font-family: monospace; color: #f1f5f9;">
+          <td class="num nowrap">
             ₹ ${acc.current_balance.toLocaleString('en-IN')}
           </td>
           <td>
-            ${acc.dpd > 0 ? `<span style="color: #fb7185; font-weight: 700;">${acc.dpd} DPD</span>` : `<span style="color: #34d399;">0 DPD</span>`}
+            ${acc.dpd > 0 ? `<span class="text-danger">${acc.dpd}</span>` : `<span style="color: var(--text-muted);">0</span>`}
           </td>
           <td>
             <div class="reason-box">
@@ -504,7 +504,7 @@ const exceptionsMaster = {
             </div>
           </td>
           <td>
-            <button class="btn btn-sm ${isSelected ? 'btn-secondary' : 'btn-primary'}" onclick="exceptionsMaster.toggleSelect('${acc.account_number}')">
+            <button class="btn btn-sm btn-secondary" onclick="exceptionsMaster.toggleSelect('${acc.account_number}')">
               ${isSelected ? 'Include' : 'Exclude'}
             </button>
           </td>
@@ -658,18 +658,18 @@ const submissionTracker = {
       return `
         <tr>
           <td>
-            <a href="javascript:void(0)" onclick="submissionTracker.openDetailModal('${req.id}')" style="font-family: monospace; font-weight: 700; color: #60a5fa; text-decoration: none;">
+            <a href="javascript:void(0)" onclick="submissionTracker.openDetailModal('${req.id}')" class="mono" style="font-weight: 500; color: var(--primary); text-decoration: none; white-space: nowrap;">
               ${req.id}
             </a>
             <div style="font-size: 0.72rem; color: var(--text-dim);">${req.created_at}</div>
           </td>
           <td>
-            <span class="badge" style="background: rgba(255,255,255,0.06); color: #e2e8f0;">${req.submission_type}</span>
+            ${req.submission_type}
           </td>
           <td>
             <span class="${bureauBadgeClass}">${req.bureau}</span>
           </td>
-          <td style="color: #cbd5e1; font-size: 0.85rem;">
+          <td style="color: var(--text-secondary); font-size: 0.85rem;">
             ${req.submission_date}
           </td>
           <td>
@@ -677,8 +677,8 @@ const submissionTracker = {
               ${req.excluded_count} Excluded
             </span>
           </td>
-          <td style="color: #34d399; font-weight: 600;">
-            ${req.included_count} Records
+          <td style="color: var(--text-main); font-variant-numeric: tabular-nums;">
+            ${req.included_count}
           </td>
           <td>
             <span class="badge badge-completed">
@@ -695,12 +695,12 @@ const submissionTracker = {
               </button>
             </div>
             <div style="font-size: 0.7rem; color: var(--text-dim); margin-top: 2px;">
-              📁 ${req.blob_file_name} (${req.file_size})
+              ${req.blob_file_name} (${req.file_size})
             </div>
           </td>
           <td style="text-align: right;">
             <div class="actions-cell" style="justify-content: flex-end;">
-              <a href="/api/download/${req.blob_file_name}" class="btn btn-sm btn-success" title="Download Transmission File">
+              <a href="/api/download/${req.blob_file_name}" class="btn btn-sm btn-secondary" title="Download Transmission File">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                   <polyline points="7 10 12 15 17 10"></polyline>
@@ -757,21 +757,21 @@ const submissionTracker = {
 
     body.innerHTML = `
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
-        <div style="background: rgba(0,0,0,0.25); padding: 0.85rem; border-radius: 8px;">
+        <div style="background: var(--bg-subtle); padding: 0.85rem; border-radius: 8px;">
           <div style="font-size: 0.72rem; color: var(--text-muted);">Request ID</div>
-          <div style="font-weight: 700; color: #60a5fa; font-family: monospace;">${req.id}</div>
+          <div style="font-weight: 700; color: var(--primary); font-family: monospace;">${req.id}</div>
         </div>
-        <div style="background: rgba(0,0,0,0.25); padding: 0.85rem; border-radius: 8px;">
+        <div style="background: var(--bg-subtle); padding: 0.85rem; border-radius: 8px;">
           <div style="font-size: 0.72rem; color: var(--text-muted);">Submission Type & Bureau</div>
-          <div style="font-weight: 700; color: #fff;">${req.submission_type} - ${req.bureau}</div>
+          <div style="font-weight: 700; color: var(--text-main);">${req.submission_type} - ${req.bureau}</div>
         </div>
-        <div style="background: rgba(0,0,0,0.25); padding: 0.85rem; border-radius: 8px;">
+        <div style="background: var(--bg-subtle); padding: 0.85rem; border-radius: 8px;">
           <div style="font-size: 0.72rem; color: var(--text-muted);">Azure Function App</div>
-          <div style="font-family: monospace; font-size: 0.8rem; color: #cbd5e1;">${req.function_app_name}</div>
+          <div style="font-family: monospace; font-size: 0.8rem; color: var(--text-secondary);">${req.function_app_name}</div>
         </div>
-        <div style="background: rgba(0,0,0,0.25); padding: 0.85rem; border-radius: 8px;">
+        <div style="background: var(--bg-subtle); padding: 0.85rem; border-radius: 8px;">
           <div style="font-size: 0.72rem; color: var(--text-muted);">Execution Run ID</div>
-          <div style="font-family: monospace; font-size: 0.8rem; color: #34d399;">${req.execution_id}</div>
+          <div style="font-family: monospace; font-size: 0.8rem; color: var(--text-secondary);">${req.execution_id}</div>
         </div>
       </div>
 
@@ -783,8 +783,8 @@ const submissionTracker = {
         </div>
       </div>
 
-      <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border-subtle); padding: 1rem; border-radius: 8px;">
-        <div style="font-size: 0.8rem; font-weight: 600; color: #f1f5f9; margin-bottom: 0.5rem;">
+      <div style="background: var(--bg-subtle); border: 1px solid var(--border-subtle); padding: 1rem; border-radius: 8px;">
+        <div style="font-size: 0.8rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.5rem;">
           Excluded Accounts (${req.excluded_count || 0}):
         </div>
         <div style="display: flex; flex-wrap: wrap; gap: 0.45rem;">

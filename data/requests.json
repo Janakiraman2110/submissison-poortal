@@ -1,5 +1,55 @@
 [
   {
+    "id": "REQ-202610-EXPE-F601",
+    "submission_type": "Consumer",
+    "bureau": "Experian",
+    "submission_date": "2026-10-16",
+    "created_at": "2026-10-16 15:13:50",
+    "status": "Completed",
+    "total_accounts": 7,
+    "excluded_count": 7,
+    "included_count": 0,
+    "excluded_accounts": [
+      "ACC-CON-104921",
+      "ACC-CON-104922",
+      "ACC-CON-104923",
+      "ACC-CON-104924",
+      "ACC-CON-104925",
+      "ACC-CON-104926",
+      "ACC-CON-104927"
+    ],
+    "function_app_name": "func-bureau-experian-consumer-prod",
+    "execution_id": "exec-08d2-eb8985c3",
+    "blob_container": "experian-consumer-submissions",
+    "blob_file_name": "EXPERIAN_CONSUMER_SUBMISSION_20261016_151350.csv",
+    "blob_url": "https://azsubtrackprod.blob.core.windows.net/experian-consumer-submissions/2026-10/EXPERIAN_CONSUMER_SUBMISSION_20261016_151350.csv?sp=r&st=2026-10-16&se=2027-12-31&spr=https&sv=2024-11-04&sr=b&sig=SIMULATED_a84b42910bbb",
+    "file_size": "0.5 KB",
+    "notes": "Scheduled Monthly Bureau Reporting Cycle"
+  },
+  {
+    "id": "REQ-202610-HIGH-6914",
+    "submission_type": "Commercial",
+    "bureau": "Highmark",
+    "submission_date": "2026-10-16",
+    "created_at": "2026-10-16 13:15:42",
+    "status": "Completed",
+    "total_accounts": 7,
+    "excluded_count": 3,
+    "included_count": 4,
+    "excluded_accounts": [
+      "ACC-COM-980130",
+      "ACC-COM-980129",
+      "ACC-COM-980128"
+    ],
+    "function_app_name": "func-bureau-highmark-commercial-prod",
+    "execution_id": "exec-05cc-974f7fef",
+    "blob_container": "highmark-commercial-submissions",
+    "blob_file_name": "HIGHMARK_COMMERCIAL_SUBMISSION_20261016_131542.txt",
+    "blob_url": "https://azsubtrackprod.blob.core.windows.net/highmark-commercial-submissions/2026-10/HIGHMARK_COMMERCIAL_SUBMISSION_20261016_131542.txt?sp=r&st=2026-10-16&se=2027-12-31&spr=https&sv=2024-11-04&sr=b&sig=SIMULATED_db999b35b714",
+    "file_size": "0.6 KB",
+    "notes": "Scheduled Monthly Bureau Reporting Cycle"
+  },
+  {
     "id": "REQ-202610-EXPE-A4FC",
     "submission_type": "Consumer",
     "bureau": "Experian",

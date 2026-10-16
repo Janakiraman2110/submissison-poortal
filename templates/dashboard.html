@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - BureauPulse{% endblock %}
+{% block breadcrumb %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h2 class="page-title">Dashboard</h2>
+    <p class="page-subtitle">Credit bureau reporting activity across all bureaus.</p>
+  </div>
+  <div class="page-actions">
+    <a href="{{ url_for('exceptions_page') }}" class="btn btn-secondary btn-sm">Review exceptions</a>
+  </div>
+</div>
+
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <span class="stat-lbl">Submissions</span>
+    <div class="stat-val">{{ stats.total_requests }}</div>
+    <span class="stat-foot">Completed requests</span>
+  </div>
+  <div class="kpi-card">
+    <span class="stat-lbl">Records transmitted</span>
+    <div class="stat-val">{{ "{:,}".format(stats.records_sent) }}</div>
+    <span class="stat-foot">Across all bureau files</span>
+  </div>
+  <div class="kpi-card">
+    <span class="stat-lbl">Accounts excluded</span>
+    <div class="stat-val">{{ stats.excluded }}</div>
+    <span class="stat-foot">Withheld as exceptions</span>
+  </div>
+  <div class="kpi-card">
+    <span class="stat-lbl">Flagged accounts</span>
+    <div class="stat-val">{{ stats.flagged }}<span class="stat-of"> / {{ stats.accounts }}</span></div>
+    <span class="stat-foot">With an open exception reason</span>
+  </div>
+</div>
+
+<div class="dash-grid">
+  <!-- Recent submissions -->
+  <section class="panel">
+    <div class="panel-head">
+      <h3 class="panel-title">Recent submissions</h3>
+      <a href="{{ url_for('tracker_page') }}" class="link">View all</a>
+    </div>
+    <div class="table-plain">
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th>Request</th>
+            <th>Bureau</th>
+            <th>Type</th>
+            <th>Date</th>
+            <th class="num">Records</th>
+            <th class="num">Excluded</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in recent %}
+          <tr>
+            <td class="mono strong">{{ r.id }}</td>
+            <td>{{ r.bureau }}</td>
+            <td>{{ r.submission_type }}</td>
+            <td>{{ r.submission_date }}</td>
+            <td class="num">{{ r.included_count }}</td>
+            <td class="num">{{ r.excluded_count }}</td>
+            <td><span class="status"><span class="dot dot-green"></span>{{ r.status }}</span></td>
+          </tr>
+          {% else %}
+          <tr><td colspan="7" class="empty">No submissions yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Bureau status -->
+  <section class="panel">
+    <div class="panel-head">
+      <h3 class="panel-title">Bureaus</h3>
+    </div>
+    <ul class="bureau-list">
+      {% for b in bureaus %}
+      <li>
+        <div class="bureau-row">
+          <span class="bureau-name">{{ b.name }}</span>
+          <span class="bureau-meta">
+            {% if b.last %}{{ b.count }} file{{ 's' if b.count != 1 }} &middot; last {{ b.last }}{% else %}No submissions{% endif %}
+          </span>
+        </div>
+        <div class="bar"><span style="width: {{ (b.records / max_records * 100) | round(0) }}%"></span></div>
+        <div class="bureau-records">{{ b.records }} records</div>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+</div>
+
+<!-- Exceptions -->
+<section class="panel" style="margin-top: 1.25rem;">
+  <div class="panel-head">
+    <h3 class="panel-title">Highest-risk exceptions</h3>
+    <a href="{{ url_for('exceptions_page') }}" class="link">Manage exceptions</a>
+  </div>
+  <div class="table-plain">
+    <table class="modern-table">
+      <thead>
+        <tr>
+          <th>Account</th>
+          <th>Customer</th>
+          <th>Type</th>
+          <th class="num">DPD</th>
+          <th>Reason</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for a in top_exceptions %}
+        <tr>
+          <td class="mono strong">{{ a.account_number }}</td>
+          <td>{{ a.customer_name }}</td>
+          <td>{{ a.type }}</td>
+          <td class="num {% if a.dpd > 30 %}text-danger{% endif %}">{{ a.dpd }}</td>
+          <td class="muted">{{ a.exception_reason }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5" class="empty">No flagged accounts.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}
