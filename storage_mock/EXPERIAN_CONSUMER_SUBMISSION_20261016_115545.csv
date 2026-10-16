@@ -1,0 +1,7 @@
+Account_Number,Entity_Name,Identifier_Tax_ID,Facility_Type,Sanctioned_Limit,Current_Balance,DPD,Status
+ACC-CON-104923,Vikramaditya Roy,PAN: CRPR9012C,Personal Unsecured Loan,1200000,890000,45,SMA-1
+ACC-CON-104924,Meera Venkatraman,PAN: DVPM3456D,Education Loan,4000000,3950000,0,Moratorium Period
+ACC-CON-104925,Rohan Malhotra,PAN: ERPM7890E,Credit Card Premium,500000,462100,78,SMA-2
+ACC-CON-104926,Ananya Mukherjee,PAN: FAM0123F,Consumer Durable Loan,150000,42000,0,Standard
+ACC-CON-104927,Kavitha Rajagopal,PAN: GKR4567G,Loan Against Gold,800000,790000,0,Standard
+# Summary: Total Submitted: 5 | Excluded: 2 | Date: 2026-10-22

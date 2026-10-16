@@ -1,0 +1,110 @@
+[
+  {
+    "id": "REQ-202610-EXPE-A4FC",
+    "submission_type": "Consumer",
+    "bureau": "Experian",
+    "submission_date": "2026-10-22",
+    "created_at": "2026-10-16 11:55:45",
+    "status": "Completed",
+    "total_accounts": 7,
+    "excluded_count": 2,
+    "included_count": 5,
+    "excluded_accounts": [
+      "ACC-CON-104921",
+      "ACC-CON-104922"
+    ],
+    "function_app_name": "func-bureau-experian-consumer-prod",
+    "execution_id": "exec-ef0f-3d3d9fe9",
+    "blob_container": "experian-consumer-submissions",
+    "blob_file_name": "EXPERIAN_CONSUMER_SUBMISSION_20261016_115545.csv",
+    "blob_url": "https://azsubtrackprod.blob.core.windows.net/experian-consumer-submissions/2026-10/EXPERIAN_CONSUMER_SUBMISSION_20261016_115545.csv?sp=r&st=2026-10-16&se=2027-12-31&spr=https&sv=2024-11-04&sr=b&sig=SIMULATED_a6508a1778e2",
+    "file_size": "0.6 KB",
+    "notes": "Scheduled Monthly Bureau Reporting Cycle"
+  },
+  {
+    "id": "REQ-202610-CIBI-0651",
+    "submission_type": "Commercial",
+    "bureau": "CIBIL",
+    "submission_date": "2026-10-16",
+    "created_at": "2026-10-16 11:52:38",
+    "status": "Completed",
+    "total_accounts": 8,
+    "excluded_count": 2,
+    "included_count": 6,
+    "excluded_accounts": [
+      "ACC-COM-980126",
+      "ACC-COM-980130"
+    ],
+    "function_app_name": "func-bureau-cibil-commercial-prod",
+    "execution_id": "exec-c02f-ed63885b",
+    "blob_container": "cibil-commercial-submissions",
+    "blob_file_name": "CIBIL_COMMERCIAL_SUBMISSION_20261016_115238.dat",
+    "blob_url": "https://azsubtrackprod.blob.core.windows.net/cibil-commercial-submissions/2026-10/CIBIL_COMMERCIAL_SUBMISSION_20261016_115238.dat?sp=r&st=2026-10-16&se=2027-12-31&spr=https&sv=2024-11-04&sr=b&sig=SIMULATED_845380af4620",
+    "file_size": "0.8 KB",
+    "notes": "Automated test submission"
+  },
+  {
+    "id": "REQ-2026-10-CIBIL-001",
+    "submission_type": "Commercial",
+    "bureau": "CIBIL",
+    "submission_date": "2026-10-15",
+    "created_at": "2026-10-15 14:32:10",
+    "status": "Completed",
+    "total_accounts": 8,
+    "excluded_count": 2,
+    "included_count": 6,
+    "excluded_accounts": [
+      "ACC-COM-980126",
+      "ACC-COM-980130"
+    ],
+    "function_app_name": "func-bureau-cibil-processor-prod",
+    "execution_id": "exec-99e2-a1f948b8",
+    "blob_container": "cibil-commercial-submissions",
+    "blob_file_name": "CIBIL_COMM_SUBMISSION_20261015_BATCH01.dat",
+    "blob_url": "https://azsubtrackprod.blob.core.windows.net/cibil-commercial-submissions/2026-10/CIBIL_COMM_SUBMISSION_20261015_BATCH01.dat",
+    "file_size": "42.8 KB",
+    "notes": "Monthly cycle automated execution via scheduled trigger."
+  },
+  {
+    "id": "REQ-2026-10-HIGHM-002",
+    "submission_type": "Consumer",
+    "bureau": "Highmark",
+    "submission_date": "2026-10-14",
+    "created_at": "2026-10-14 09:15:42",
+    "status": "Completed",
+    "total_accounts": 8,
+    "excluded_count": 1,
+    "included_count": 7,
+    "excluded_accounts": [
+      "ACC-CON-104925"
+    ],
+    "function_app_name": "func-bureau-highmark-retail-prod",
+    "execution_id": "exec-74c1-f3b1909a",
+    "blob_container": "highmark-consumer-submissions",
+    "blob_file_name": "HIGHMARK_CONS_SUBMISSION_20261014_BATCH02.txt",
+    "blob_url": "https://azsubtrackprod.blob.core.windows.net/highmark-consumer-submissions/2026-10/HIGHMARK_CONS_SUBMISSION_20261014_BATCH02.txt",
+    "file_size": "38.2 KB",
+    "notes": "Retail loans monthly reporting submission."
+  },
+  {
+    "id": "REQ-2026-10-EXPER-003",
+    "submission_type": "Commercial",
+    "bureau": "Experian",
+    "submission_date": "2026-10-12",
+    "created_at": "2026-10-12 16:40:05",
+    "status": "Completed",
+    "total_accounts": 8,
+    "excluded_count": 1,
+    "included_count": 7,
+    "excluded_accounts": [
+      "ACC-COM-980126"
+    ],
+    "function_app_name": "func-bureau-experian-comm-prod",
+    "execution_id": "exec-52d8-e4b2195c",
+    "blob_container": "experian-commercial-submissions",
+    "blob_file_name": "EXPERIAN_COMM_SUBMISSION_20261012_BATCH01.csv",
+    "blob_url": "https://azsubtrackprod.blob.core.windows.net/experian-commercial-submissions/2026-10/EXPERIAN_COMM_SUBMISSION_20261012_BATCH01.csv",
+    "file_size": "29.4 KB",
+    "notes": "Commercial corporate entities segment reporting."
+  }
+]

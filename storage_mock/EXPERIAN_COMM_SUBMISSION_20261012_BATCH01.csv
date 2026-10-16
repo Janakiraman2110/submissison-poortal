@@ -1,0 +1,9 @@
+Account_Number,Entity_Name,GSTIN,Facility,Sanctioned_Amount,Current_Balance,DPD,Status
+ACC-COM-980124,Apex Global Logistics Pvt Ltd,27AAACA1234F1Z8,Working Capital Term Loan,75000000,42100500,0,Active
+ACC-COM-980125,Nexus Green Energy Infra LLP,29BBBCB5678G2Z1,Project Finance Loan,120000000,98450000,18,Active
+ACC-COM-980127,Zenith Agro Exports & Trading,07DDDDE3456J4Z7,Packing Credit Foreign Currency,30000000,18250000,0,Active
+ACC-COM-980128,Vanguard Biotech & Healthcare Ltd,19EEEEF7890K5Z2,Equipment Lease Term Loan,55000000,31200000,5,Active
+ACC-COM-980129,Blue Horizon Maritime Services,24FFFFG1234L6Z5,Bank Guarantee,25000000,0,0,Active
+ACC-COM-980130,Radiant Textiles & Apparels Ltd,08GGGGH5678M7Z8,Term Loan,80000000,62500000,92,NPA
+ACC-COM-980131,Sterling Cloud Softwares India,36HHHHJ9012N8Z1,Overdraft Facility,15000000,8900000,0,Active
+# Summary: Total Records: 7 | Excluded: 1 (ACC-COM-980126) | Execution: exec-52d8-e4b2195c

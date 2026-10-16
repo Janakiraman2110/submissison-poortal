@@ -1,0 +1,47 @@
+================================================================================
+CREDIT BUREAU SUBMISSION AUDIT & EXCLUSION REPORT
+Generated on: 2026-10-16 11:52:48 UTC
+================================================================================
+
+1. SUBMISSION REQUEST DETAILS
+--------------------------------------------------------------------------------
+Request ID:              REQ-202610-CIBI-0651
+Submission Type:         Commercial
+Target Credit Bureau:    CIBIL
+Submission Date:         2026-10-16
+Created At:              2026-10-16 11:52:38
+Status:                  Completed
+
+2. AZURE FUNCTION APP EXECUTION LOGS
+--------------------------------------------------------------------------------
+Function App Name:       func-bureau-cibil-commercial-prod
+Execution Run ID:        exec-c02f-ed63885b
+Output File:             CIBIL_COMMERCIAL_SUBMISSION_20261016_115238.dat
+File Size:               0.8 KB
+Azure Blob Storage URL:  https://azsubtrackprod.blob.core.windows.net/cibil-commercial-submissions/2026-10/CIBIL_COMMERCIAL_SUBMISSION_20261016_115238.dat?sp=r&st=2026-10-16&se=2027-12-31&spr=https&sv=2024-11-04&sr=b&sig=SIMULATED_845380af4620
+
+3. RECONCILIATION SUMMARY
+--------------------------------------------------------------------------------
+Total Portfolio Eligible: 8
+Active Submitted Records: 6
+Excluded Exceptions:      2
+
+4. EXCLUDED EXCEPTIONS LOG (AUDIT COMPLIANCE)
+--------------------------------------------------------------------------------
+[1] Account No: ACC-COM-980126
+    Customer Name:    Titan Steel & Forging Corp
+    Facility:         Cash Credit
+    Current Balance:  INR 44,800,000
+    Status / DPD:     SMA-2 / 65 DPD
+    Exclusion Reason: Under NCLT Resolution process - Legal stay on reporting
+--------------------------------------------------------------------------------
+[2] Account No: ACC-COM-980130
+    Customer Name:    Radiant Textiles & Apparels Ltd
+    Facility:         Term Loan
+    Current Balance:  INR 62,500,000
+    Status / DPD:     NPA / 92 DPD
+    Exclusion Reason: SARFAESI notice served; court interim injunction in place
+--------------------------------------------------------------------------------
+
+================================================================================
+END OF AUDIT REPORT
