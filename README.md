@@ -77,3 +77,17 @@ submissison poortal/
     ├── tracker.html            # Submission Tracker Dashboard
     └── blob_storage.html       # Azure Blob Storage Container Explorer
 ```
+
+---
+
+## Live demo (GitHub Pages)
+
+A static build of the app is published from the `docs/` folder. GitHub Pages cannot run Flask, so
+`static/js/static-api.js` emulates the `/api/*` endpoints in the browser using the bundled seed data;
+requests created in the demo are stored in the visitor's browser (localStorage).
+
+Rebuild the static site after changing templates, styles or data:
+
+```bash
+python build_static.py
+```

@@ -2,6 +2,12 @@
  * BureauPulse - Submission & Exceptions Tracker Frontend Engine
  */
 
+// Navigate to a download URL (the static GitHub Pages build overrides window.staticDownload)
+function downloadUrl(url) {
+  if (window.staticDownload) return window.staticDownload(url);
+  window.location.href = url;
+}
+
 // Toast notification helper
 function showToast(message, type = 'info') {
   const toast = document.getElementById('toastNotification');
@@ -391,7 +397,7 @@ const wizard = {
 
   downloadFileFromModal() {
     if (this.lastCreatedRequest && this.lastCreatedRequest.blob_file_name) {
-      window.location.href = `/api/download/${this.lastCreatedRequest.blob_file_name}`;
+      downloadUrl(`/api/download/${this.lastCreatedRequest.blob_file_name}`);
     }
   },
 
@@ -797,11 +803,11 @@ const submissionTracker = {
     `;
 
     document.getElementById('btnDetailFileDownload').onclick = () => {
-      window.location.href = `/api/download/${req.blob_file_name}`;
+      downloadUrl(`/api/download/${req.blob_file_name}`);
     };
 
     document.getElementById('btnDetailAuditDownload').onclick = () => {
-      window.location.href = `/api/download-audit/${req.id}`;
+      downloadUrl(`/api/download-audit/${req.id}`);
     };
 
     modal.classList.add('show');

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - BureauPulse</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/style.css">
+  
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <a href="index.html" class="side-brand">
+    <span class="side-logo">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 12 7 12 10 5 14 19 17 12 21 12"></polyline></svg>
+    </span>
+    <span class="side-brand-text">
+      <strong>BureauPulse</strong>
+      <small>Bureau reporting</small>
+    </span>
+  </a>
+
+  <nav class="side-nav">
+    <div class="side-section">Main</div>
+      <a href="index.html" class="side-link active">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"></rect><rect x="14" y="3" width="7" height="5" rx="1"></rect><rect x="14" y="12" width="7" height="9" rx="1"></rect><rect x="3" y="16" width="7" height="5" rx="1"></rect></svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="request.html" class="side-link ">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+        <span>New Request</span>
+      </a>
+      <a href="exceptions.html" class="side-link ">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+        <span>Exceptions</span>
+      </a>
+
+    <div class="side-section">Reports</div>
+      <a href="tracker.html" class="side-link ">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+        <span>Submission Tracker</span>
+      </a>
+      <a href="blob-storage.html" class="side-link ">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+        <span>Blob Storage</span>
+      </a>
+  </nav>
+
+  <div class="side-footer">
+    <div class="side-status"><span class="dot dot-green"></span>Azure services online</div>
+    <div class="side-user">
+      <div class="avatar">OP</div>
+      <div class="side-user-text">
+        <strong>Operations</strong>
+        <small>Bureau reporting team</small>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<div class="main">
+  <header class="topbar">
+    <button type="button" class="side-toggle" aria-label="Open menu" onclick="document.getElementById('sidebar').classList.toggle('open')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+    <div class="topbar-title">
+      <span class="product">Bureau Reporting</span>
+      <span class="sep">/</span>
+      <span class="current">Dashboard</span>
+    </div>
+    <div class="topbar-right">
+      <a href="request.html" class="btn btn-primary btn-sm">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        New request
+      </a>
+    </div>
+  </header>
+
+  <main class="container">
+    
+<div class="page-header">
+  <div>
+    <h2 class="page-title">Dashboard</h2>
+    <p class="page-subtitle">Credit bureau reporting activity across all bureaus.</p>
+  </div>
+  <div class="page-actions">
+    <a href="exceptions.html" class="btn btn-secondary btn-sm">Review exceptions</a>
+  </div>
+</div>
+
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <span class="stat-lbl">Submissions</span>
+    <div class="stat-val" id="dashTotal">7</div>
+    <span class="stat-foot">Completed requests</span>
+  </div>
+  <div class="kpi-card">
+    <span class="stat-lbl">Records transmitted</span>
+    <div class="stat-val" id="dashRecords">35</div>
+    <span class="stat-foot">Across all bureau files</span>
+  </div>
+  <div class="kpi-card">
+    <span class="stat-lbl">Accounts excluded</span>
+    <div class="stat-val" id="dashExcluded">18</div>
+    <span class="stat-foot">Withheld as exceptions</span>
+  </div>
+  <div class="kpi-card">
+    <span class="stat-lbl">Flagged accounts</span>
+    <div class="stat-val">16<span class="stat-of"> / 16</span></div>
+    <span class="stat-foot">With an open exception reason</span>
+  </div>
+</div>
+
+<div class="dash-grid">
+  <!-- Recent submissions -->
+  <section class="panel">
+    <div class="panel-head">
+      <h3 class="panel-title">Recent submissions</h3>
+      <a href="tracker.html" class="link">View all</a>
+    </div>
+    <div class="table-plain">
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th>Request</th>
+            <th>Bureau</th>
+            <th>Type</th>
+            <th>Date</th>
+            <th class="num">Records</th>
+            <th class="num">Excluded</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="dashRecentBody">
+          
+          <tr>
+            <td class="mono strong">REQ-202610-EXPE-F601</td>
+            <td>Experian</td>
+            <td>Consumer</td>
+            <td>2026-10-16</td>
+            <td class="num">0</td>
+            <td class="num">7</td>
+            <td><span class="status"><span class="dot dot-green"></span>Completed</span></td>
+          </tr>
+          
+          <tr>
+            <td class="mono strong">REQ-202610-HIGH-6914</td>
+            <td>Highmark</td>
+            <td>Commercial</td>
+            <td>2026-10-16</td>
+            <td class="num">4</td>
+            <td class="num">3</td>
+            <td><span class="status"><span class="dot dot-green"></span>Completed</span></td>
+          </tr>
+          
+          <tr>
+            <td class="mono strong">REQ-202610-EXPE-A4FC</td>
+            <td>Experian</td>
+            <td>Consumer</td>
+            <td>2026-10-22</td>
+            <td class="num">5</td>
+            <td class="num">2</td>
+            <td><span class="status"><span class="dot dot-green"></span>Completed</span></td>
+          </tr>
+          
+          <tr>
+            <td class="mono strong">REQ-202610-CIBI-0651</td>
+            <td>CIBIL</td>
+            <td>Commercial</td>
+            <td>2026-10-16</td>
+            <td class="num">6</td>
+            <td class="num">2</td>
+            <td><span class="status"><span class="dot dot-green"></span>Completed</span></td>
+          </tr>
+          
+          <tr>
+            <td class="mono strong">REQ-2026-10-CIBIL-001</td>
+            <td>CIBIL</td>
+            <td>Commercial</td>
+            <td>2026-10-15</td>
+            <td class="num">6</td>
+            <td class="num">2</td>
+            <td><span class="status"><span class="dot dot-green"></span>Completed</span></td>
+          </tr>
+          
+          <tr>
+            <td class="mono strong">REQ-2026-10-HIGHM-002</td>
+            <td>Highmark</td>
+            <td>Consumer</td>
+            <td>2026-10-14</td>
+            <td class="num">7</td>
+            <td class="num">1</td>
+            <td><span class="status"><span class="dot dot-green"></span>Completed</span></td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Bureau status -->
+  <section class="panel">
+    <div class="panel-head">
+      <h3 class="panel-title">Bureaus</h3>
+    </div>
+    <ul class="bureau-list" id="dashBureauList">
+      
+      <li>
+        <div class="bureau-row">
+          <span class="bureau-name">CIBIL</span>
+          <span class="bureau-meta">
+            2 files &middot; last 2026-10-16
+          </span>
+        </div>
+        <div class="bar"><span style="width: 100.0%"></span></div>
+        <div class="bureau-records">12 records</div>
+      </li>
+      
+      <li>
+        <div class="bureau-row">
+          <span class="bureau-name">Highmark</span>
+          <span class="bureau-meta">
+            2 files &middot; last 2026-10-16
+          </span>
+        </div>
+        <div class="bar"><span style="width: 92.0%"></span></div>
+        <div class="bureau-records">11 records</div>
+      </li>
+      
+      <li>
+        <div class="bureau-row">
+          <span class="bureau-name">Experian</span>
+          <span class="bureau-meta">
+            3 files &middot; last 2026-10-16
+          </span>
+        </div>
+        <div class="bar"><span style="width: 100.0%"></span></div>
+        <div class="bureau-records">12 records</div>
+      </li>
+      
+      <li>
+        <div class="bureau-row">
+          <span class="bureau-name">Equifax</span>
+          <span class="bureau-meta">
+            No submissions
+          </span>
+        </div>
+        <div class="bar"><span style="width: 0.0%"></span></div>
+        <div class="bureau-records">0 records</div>
+      </li>
+      
+    </ul>
+  </section>
+</div>
+
+<!-- Exceptions -->
+<section class="panel" style="margin-top: 1.25rem;">
+  <div class="panel-head">
+    <h3 class="panel-title">Highest-risk exceptions</h3>
+    <a href="exceptions.html" class="link">Manage exceptions</a>
+  </div>
+  <div class="table-plain">
+    <table class="modern-table">
+      <thead>
+        <tr>
+          <th>Account</th>
+          <th>Customer</th>
+          <th>Type</th>
+          <th class="num">DPD</th>
+          <th>Reason</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+          <td class="mono strong">ACC-COM-980130</td>
+          <td>Radiant Textiles &amp; Apparels Ltd</td>
+          <td>Commercial</td>
+          <td class="num text-danger">92</td>
+          <td class="muted">SARFAESI notice served; court interim injunction in place</td>
+        </tr>
+        
+        <tr>
+          <td class="mono strong">ACC-CON-104925</td>
+          <td>Rohan Malhotra</td>
+          <td>Consumer</td>
+          <td class="num text-danger">78</td>
+          <td class="muted">Fraudulent card chargeback reported; forensic cyber inquiry</td>
+        </tr>
+        
+        <tr>
+          <td class="mono strong">ACC-COM-980126</td>
+          <td>Titan Steel &amp; Forging Corp</td>
+          <td>Commercial</td>
+          <td class="num text-danger">65</td>
+          <td class="muted">Under NCLT Resolution process - Legal stay on reporting</td>
+        </tr>
+        
+        <tr>
+          <td class="mono strong">ACC-CON-104923</td>
+          <td>Vikramaditya Roy</td>
+          <td>Consumer</td>
+          <td class="num text-danger">45</td>
+          <td class="muted">Borrower requested 60-day medical emergency payment deferment</td>
+        </tr>
+        
+        <tr>
+          <td class="mono strong">ACC-CON-104928</td>
+          <td>Farhan Zameer Khan</td>
+          <td>Consumer</td>
+          <td class="num text-danger">32</td>
+          <td class="muted">Insurance claim total loss adjustment pending with insurer</td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+</section>
+
+  </main>
+</div>
+
+<div id="toastNotification" style="position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: none;"></div>
+
+<script src="static/js/seed-data.js"></script>
+<script src="static/js/static-api.js"></script>
+<script src="static/js/main.js"></script>
+
+</body>
+</html>

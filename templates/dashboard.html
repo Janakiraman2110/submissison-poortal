@@ -17,17 +17,17 @@
 <div class="kpi-grid">
   <div class="kpi-card">
     <span class="stat-lbl">Submissions</span>
-    <div class="stat-val">{{ stats.total_requests }}</div>
+    <div class="stat-val" id="dashTotal">{{ stats.total_requests }}</div>
     <span class="stat-foot">Completed requests</span>
   </div>
   <div class="kpi-card">
     <span class="stat-lbl">Records transmitted</span>
-    <div class="stat-val">{{ "{:,}".format(stats.records_sent) }}</div>
+    <div class="stat-val" id="dashRecords">{{ "{:,}".format(stats.records_sent) }}</div>
     <span class="stat-foot">Across all bureau files</span>
   </div>
   <div class="kpi-card">
     <span class="stat-lbl">Accounts excluded</span>
-    <div class="stat-val">{{ stats.excluded }}</div>
+    <div class="stat-val" id="dashExcluded">{{ stats.excluded }}</div>
     <span class="stat-foot">Withheld as exceptions</span>
   </div>
   <div class="kpi-card">
@@ -57,7 +57,7 @@
             <th>Status</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="dashRecentBody">
           {% for r in recent %}
           <tr>
             <td class="mono strong">{{ r.id }}</td>
@@ -81,7 +81,7 @@
     <div class="panel-head">
       <h3 class="panel-title">Bureaus</h3>
     </div>
-    <ul class="bureau-list">
+    <ul class="bureau-list" id="dashBureauList">
       {% for b in bureaus %}
       <li>
         <div class="bureau-row">

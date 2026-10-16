@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exceptions - BureauPulse</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/style.css">
+  
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <a href="index.html" class="side-brand">
+    <span class="side-logo">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 12 7 12 10 5 14 19 17 12 21 12"></polyline></svg>
+    </span>
+    <span class="side-brand-text">
+      <strong>BureauPulse</strong>
+      <small>Bureau reporting</small>
+    </span>
+  </a>
+
+  <nav class="side-nav">
+    <div class="side-section">Main</div>
+      <a href="index.html" class="side-link ">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"></rect><rect x="14" y="3" width="7" height="5" rx="1"></rect><rect x="14" y="12" width="7" height="9" rx="1"></rect><rect x="3" y="16" width="7" height="5" rx="1"></rect></svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="request.html" class="side-link ">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+        <span>New Request</span>
+      </a>
+      <a href="exceptions.html" class="side-link active">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+        <span>Exceptions</span>
+      </a>
+
+    <div class="side-section">Reports</div>
+      <a href="tracker.html" class="side-link ">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+        <span>Submission Tracker</span>
+      </a>
+      <a href="blob-storage.html" class="side-link ">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+        <span>Blob Storage</span>
+      </a>
+  </nav>
+
+  <div class="side-footer">
+    <div class="side-status"><span class="dot dot-green"></span>Azure services online</div>
+    <div class="side-user">
+      <div class="avatar">OP</div>
+      <div class="side-user-text">
+        <strong>Operations</strong>
+        <small>Bureau reporting team</small>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<div class="main">
+  <header class="topbar">
+    <button type="button" class="side-toggle" aria-label="Open menu" onclick="document.getElementById('sidebar').classList.toggle('open')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+    <div class="topbar-title">
+      <span class="product">Bureau Reporting</span>
+      <span class="sep">/</span>
+      <span class="current">Exceptions</span>
+    </div>
+    <div class="topbar-right">
+      <a href="request.html" class="btn btn-primary btn-sm">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        New request
+      </a>
+    </div>
+  </header>
+
+  <main class="container">
+    
+<div class="page-header">
+  <div>
+    <h2 class="page-title">Exceptions Management</h2>
+    <p class="page-subtitle">
+      Review accounts flagged with legal stays, disputes, NCLT proceedings or data discrepancies. Selected accounts are excluded from the next bureau reporting request.
+    </p>
+  </div>
+  <div class="page-actions">
+    <button type="button" class="btn btn-secondary btn-sm" onclick="exceptionsMaster.exportExceptionsCSV()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      Export CSV
+    </button>
+    <button type="button" class="btn btn-primary btn-sm" onclick="exceptionsMaster.launchSubmissionWithSelected()">
+      Create Request with Exclusions (<span id="selectedExclusionsCountBadge">0</span>)
+    </button>
+  </div>
+</div>
+
+<div class="kpi-grid">
+  <div class="kpi-card blue">
+    <span class="stat-lbl">Monitored Accounts</span>
+    <div class="stat-val" id="totalMasterAccounts">16</div>
+  </div>
+  <div class="kpi-card rose">
+    <span class="stat-lbl">Marked for Exclusion</span>
+    <div class="stat-val" id="totalExcludedMarked">0</div>
+  </div>
+  <div class="kpi-card emerald">
+    <span class="stat-lbl">Clean for Submission</span>
+    <div class="stat-val" id="totalCleanMarked">16</div>
+  </div>
+</div>
+
+<div class="glass-card">
+  <div class="filter-bar">
+    <div class="search-wrapper">
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input type="text" id="masterSearchInput" class="form-control" placeholder="Search account, customer, facility or reason" oninput="exceptionsMaster.filter()">
+    </div>
+    <div class="pill-group">
+      <button class="action-pill active" data-filter-type="ALL" onclick="exceptionsMaster.setTypeFilter('ALL', this)">All</button>
+      <button class="action-pill" data-filter-type="Commercial" onclick="exceptionsMaster.setTypeFilter('Commercial', this)">Commercial</button>
+      <button class="action-pill" data-filter-type="Consumer" onclick="exceptionsMaster.setTypeFilter('Consumer', this)">Consumer</button>
+      <span class="pill-divider"></span>
+      <button class="action-pill" onclick="exceptionsMaster.toggleSelectAll(true)">Select All</button>
+      <button class="action-pill" onclick="exceptionsMaster.toggleSelectAll(false)">Clear</button>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="modern-table">
+      <thead>
+        <tr>
+          <th style="width: 50px; text-align: center;">Exclude</th>
+          <th>Account Number</th>
+          <th>Customer Name</th>
+          <th>Type</th>
+          <th>Entity / Facility</th>
+          <th>Balance (INR)</th>
+          <th>DPD</th>
+          <th>Exception Reason</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="masterExceptionsTableBody"></tbody>
+    </table>
+  </div>
+</div>
+
+  </main>
+</div>
+
+<div id="toastNotification" style="position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: none;"></div>
+
+<script src="static/js/seed-data.js"></script>
+<script src="static/js/static-api.js"></script>
+<script src="static/js/main.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    exceptionsMaster.init();
+  });
+</script>
+
+</body>
+</html>
